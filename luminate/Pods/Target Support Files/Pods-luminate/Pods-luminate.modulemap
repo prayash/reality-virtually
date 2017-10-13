@@ -1,0 +1,6 @@
+framework module Pods_luminate {
+  umbrella header "Pods-luminate-umbrella.h"
+
+  export *
+  module * { export * }
+}
