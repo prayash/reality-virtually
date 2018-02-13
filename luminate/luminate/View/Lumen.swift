@@ -10,10 +10,6 @@ import SceneKit
 
 class Lumen: SCNNode {
     
-    let sprites = [UIImage(named: "sprite1"),
-                   UIImage(named: "sprite2"),
-                   UIImage(named: "sprite3")]
-    
     init(id: String, position: SCNVector3, size: CGFloat) {
         super.init()
         
@@ -28,9 +24,17 @@ class Lumen: SCNNode {
         node.scale = SCNVector3Make(0.5, 0.5, 0.5)
         node.position = position
         
-        let img = sprites[0]
-        orb.firstMaterial?.diffuse.contents = img
+        var sprite: UIImage?
+        if let textureImage = UIImage(named: "sprite1") {
+            UIGraphicsBeginImageContext(textureImage.size)
+            let width = textureImage.size.width
+            let height = textureImage.size.height
+            textureImage.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+            sprite = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        }
         
+        orb.firstMaterial?.diffuse.contents = sprite
         
         let displacement: Float = 0.5
         let down = SCNAction.moveBy(x: 0.0, y: CGFloat(-displacement), z: 0.0, duration: 5.0)
